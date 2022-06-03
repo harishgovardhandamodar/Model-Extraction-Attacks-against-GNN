@@ -268,4 +268,22 @@ def attack2(dataset_name, attack_node_arg, cuda):
             max_acc2 = acc2
     
     print("Accuracy: " + str(acc1) + " /Fidelity: " + str(acc2))
+    G = dgl.to_networkx(g)
+    options = {
+    'node_color': 'black',
+    'node_size': 20,
+    'width': 1,
+    }
+    import matplotlib.pyplot as plt
+    figure = plt.figure(figsize=[150,70])
+    nx.draw(G, **options)
+    #plt.imsave("ExtractedGraph.png", figure)
+    plt.savefig('Attack_2_Extracted_Graph.png')
+    #edge_labels = nx.get_edge_attributes(G, "relation_type")
+    plt.figure(figsize=(150,70))
+    pos = nx.spring_layout(G)
+    #nx.draw_networkx_edge_labels(G, pos, edge_labels=data.labels)
+    nx.draw(G, pos=pos,node_color='red', node_size=2500, with_labels=True)
+    plt.savefig('Attack_2_Extracted_Graph_with_labels.png')
+
     
