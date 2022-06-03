@@ -5,7 +5,7 @@ from dgl.data import citation_graph as citegrh
 import torch
 import torch.nn
 import time
-
+import dgl
 import dgl.function as fn
 from dgl import DGLGraph
 import networkx as nx
@@ -219,6 +219,24 @@ def attack1(dataset_name, attack_node_arg, cuda):
                 epoch, loss.item(), acc1, acc2, np.mean(dur)))
     
     print("Final one:" + str(max_acc1) + "Fiderity: " + str(max_acc2))
+
+    G = dgl.to_networkx(sub_g)
+    options = {
+    'node_color': 'black',
+    'node_size': 20,
+    'width': 1,
+    }
+    import matplotlib.pyplot as plt
+    figure = plt.figure(figsize=[150,70])
+    nx.draw(G, **options)
+    #plt.imsave("ExtractedGraph.png", figure)
+    plt.savefig('Attack_1_Extracted_Graph.png')
+    #edge_labels = nx.get_edge_attributes(G, "relation_type")
+    plt.figure(figsize=(150,70))
+    pos = nx.spring_layout(G)
+    #nx.draw_networkx_edge_labels(G, pos, edge_labels=data.labels)
+    nx.draw(G, pos=pos,node_color='red', node_size=2500, with_labels=True)
+    plt.savefig('Attack_1_Extracted_Graph_with_labels.png')
 
 class GCNLayer(torch.nn.Module):
     def __init__(self, in_feats, out_feats):
