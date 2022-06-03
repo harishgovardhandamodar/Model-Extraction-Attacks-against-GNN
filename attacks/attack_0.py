@@ -319,4 +319,16 @@ def attack0(dataset_name, attack_node_arg, cuda):
     print("========================Final results:=========================================")
     print("Accuracy:" + str(max_acc2) + "Fedility:" + str(max_acc1))
 
+    G = dgl.to_networkx(g)
+    options = {
+    'node_color': 'black',
+    'node_size': 20,
+    'width': 1,
+    }
+    import matplotlib.pyplot as plt
+    figure = plt.figure(figsize=[150,70])
+    nx.draw(G, **options)
+    #plt.imsave("ExtractedGraph.png", figure)
+    plt.savefig('Attack_0_Extracted_Graph.png')
+
 
